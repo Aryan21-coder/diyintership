@@ -2,6 +2,8 @@
 # AI Movie Review Sentiment Analyzer
 # Final Deployment Version
 # ==========================================
+import os
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2" 
 
 import streamlit as st
 import matplotlib.pyplot as plt
@@ -25,7 +27,13 @@ st.set_page_config(
 # ==========================================
 # Load Model
 # ==========================================
-
+model = Sequential([
+    Embedding(10000, 16),
+    GlobalAveragePooling1D(),
+    Dense(16, activation='relu'),
+    Dense(1, activation='sigmoid')
+])
+model.save("imdb_sentiment_model.h5")
 model = load_model("imdb_sentiment_model.h5")
 
 word_index = imdb.get_word_index()
